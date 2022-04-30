@@ -63,7 +63,11 @@ public class OpenGLFXExampleLWJGL extends Application {
 
 		return canvas;
 	}
-
+	
+	/**
+	 * JavaFX Application Entry Point.
+	 * When testing use Main.class
+	 */
 	public static void main(String[] args) {
 		System.setProperty("prism.order", "es2,d3d,sw");
 		System.setProperty("prism.vsync", "false");

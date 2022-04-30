@@ -11,6 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+/**
+ * OpenGLFX Direct LWJGL example. Ported back to Java for readability.
+ * @author husker-dev
+ */
 public class ExampleOriginal extends Application {
 
 	double animVar = 0.0;
