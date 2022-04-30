@@ -29,7 +29,7 @@ public class OpenGLFXExampleLWJGL extends Application {
 		root.getChildren().add(createGLPane());
 		
 		/* Add Label On top */
-		Label label = new Label("JavaFX rendering on top. OpenFXGL rendering below");
+		Label label = new Label("JavaFX rendering on top. OpenGLFX rendering below");
 		label.setBackground(new Background(new BackgroundFill(new Color(0, 0.5, 0.9, 0.5), null, null)));
 		root.getChildren().add(label);
 		
