@@ -11,7 +11,7 @@
 		<maven.compiler.source>16</maven.compiler.source>
 		<maven.compiler.target>16</maven.compiler.target>
 		<lwjgl.version>3.3.1-SNAPSHOT</lwjgl.version>
-		<joml.version>1.10.4</joml.version>
+		<joml.version>1.9.25</joml.version>
 		<javafx.version>14</javafx.version>
 		<javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -402,11 +402,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.lwjgl</groupId>
-			<artifactId>lwjgl-sse</artifactId>
-			<classifier>${lwjgl.natives}</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.lwjgl</groupId>
 			<artifactId>lwjgl-stb</artifactId>
 			<classifier>${lwjgl.natives}</classifier>
 		</dependency>
@@ -414,11 +409,6 @@
 			<groupId>org.lwjgl</groupId>
 			<artifactId>lwjgl-tinyfd</artifactId>
 			<classifier>${lwjgl.natives}</classifier>
-		</dependency>
-			<dependency>
-			<groupId>org.joml</groupId>
-			<artifactId>joml</artifactId>
-			<version>${joml.version}</version>
 		</dependency>
 	</dependencies>
 
