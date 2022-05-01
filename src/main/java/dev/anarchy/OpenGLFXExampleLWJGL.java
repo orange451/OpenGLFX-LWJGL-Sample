@@ -1,12 +1,13 @@
 package dev.anarchy;
 
 import com.huskerdev.openglfx.DirectDrawPolicy;
-import com.huskerdev.openglfx.OpenGLCanvas;
-import com.huskerdev.openglfx.lwjgl.LWJGLInitializer;
+import com.huskerdev.openglfx.ext.OpenGLPane;
 
 import dev.anarchy.renderable.Gears;
 import dev.anarchy.renderable.Renderable;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
@@ -17,8 +18,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class OpenGLFXExampleLWJGL extends Application {
-
+	
 	private Renderable renderable;
+	
+	private Label fpsLabel;
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -29,39 +32,44 @@ public class OpenGLFXExampleLWJGL extends Application {
 		root.getChildren().add(createGLPane());
 		
 		/* Add Label On top */
-		Label label = new Label("JavaFX rendering on top. OpenGLFX rendering below");
-		label.setBackground(new Background(new BackgroundFill(new Color(0, 0.5, 0.9, 0.5), null, null)));
-		root.getChildren().add(label);
+		root.getChildren().add(createLabel());
 		
 		/* Setup Scene */
 		stage.setScene(new Scene(root, 320, 240));
 		stage.show();
 	}
+	
+	private Label createLabel() {
+		Label label = new Label("JavaFX rendering on top. OpenGLFX rendering below");
+		label.setBackground(new Background(new BackgroundFill(new Color(0, 0.5, 0.9, 0.5), null, null)));
+		return label;
+	}
 
 	private Pane createGLPane() {
-		OpenGLCanvas canvas = OpenGLCanvas.create(new LWJGLInitializer(), DirectDrawPolicy.ALWAYS);
-		canvas.createTimer(60.0);
+		// Create new OpenGLPane
+		OpenGLPane openGLPane = OpenGLPane.create(OpenGLPane.LWJGL_MODULE, DirectDrawPolicy.ALWAYS);
+		openGLPane.desiredFPSProperty().set(144);
+		
+		// Add fps Label
+		fpsLabel = new Label("");
+		openGLPane.getChildren().add(fpsLabel);
+		openGLPane.setAlignment(Pos.TOP_RIGHT);
 
-		canvas.onInitialize(()->{
+		// Setup example
+		openGLPane.setOnGLInitialize((event)->{
 			renderable = new Gears();
 		});
 		
-		canvas.onReshape(() -> {
-			renderable.onSizeChange(canvas.getWidth(), canvas.getHeight());
-		});
-
-		canvas.onUpdate(() -> {
-			if ( renderable == null )
-				return;
+		// Render example
+		openGLPane.setOnRender((event)-> {
+			Platform.runLater(()->{
+				fpsLabel.setText("fps: " + Math.floor(1d/event.getDeltaTime()));
+			});
 			
-			renderable.onUpdate();
+			renderable.onRender(openGLPane.getWidth(), openGLPane.getHeight());
 		});
-
-		canvas.onRender(() -> {
-			renderable.onRender(canvas.getWidth(), canvas.getHeight());
-		});
-
-		return canvas;
+		
+		return openGLPane;
 	}
 	
 	/**

@@ -147,7 +147,9 @@ public class Gears implements Renderable {
 		glEnd();
 	}
 
-	public void onSizeChange(double width, double height) {
+	public void onRender(double width, double height) {
+		angle += 1.0e-1f;
+		
 		double aspect = height/width;
 		
 		glMatrixMode(GL_PROJECTION);
@@ -156,9 +158,7 @@ public class Gears implements Renderable {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		glTranslatef(0.0f, 0.0f, -40.0f);
-	}
-
-	public void onRender(double width, double height) {
+		
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -201,10 +201,5 @@ public class Gears implements Renderable {
 			glPopMatrix();
 		}
 		glPopMatrix();
-	}
-
-	@Override
-	public void onUpdate() {
-		angle += 1.0e-1f;
 	}
 }

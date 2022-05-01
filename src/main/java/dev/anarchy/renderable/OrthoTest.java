@@ -7,26 +7,16 @@ public class OrthoTest implements Renderable {
 	private double y;
 	
 	private double animVar;
-	
-	private double height;
 
 	@Override
-	public void onSizeChange(double width, double height) {
+	public void onRender(double width, double height) {
+		animVar += 0.1;
+		y = Math.sin(animVar) * (height / 3);
+
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0.0, width, 0.0, height, -1.0, 100.0);
 		
-		this.height = height;
-	}
-
-	@Override
-	public void onUpdate() {
-		animVar += 0.1;
-		y = Math.sin(animVar) * (height / 3);
-	}
-
-	@Override
-	public void onRender(double width, double height) {
 		GL11.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		GL11.glClearDepth(1.0);
 
