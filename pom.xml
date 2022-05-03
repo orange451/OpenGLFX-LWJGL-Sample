@@ -12,7 +12,7 @@
 		<maven.compiler.target>16</maven.compiler.target>
 		<lwjgl.version>3.3.1-SNAPSHOT</lwjgl.version>
 		<joml.version>1.9.25</joml.version>
-		<javafx.version>17</javafx.version>
+		<javafx.version>16</javafx.version>
 		<javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -193,12 +193,12 @@
 		<dependency>
 			<groupId>com.github.husker-dev.openglfx</groupId>
 			<artifactId>core</artifactId>
-			<version>2.6</version>
+			<version>master-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.husker-dev.openglfx</groupId>
 			<artifactId>lwjgl</artifactId>
-			<version>2.6</version>
+			<version>master-SNAPSHOT</version>
 		</dependency>
 
 		<!-- Math Library -->
