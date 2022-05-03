@@ -147,8 +147,8 @@ public class Gears implements Renderable {
 		glEnd();
 	}
 
-	public void onRender(double width, double height) {
-		angle += 1.0e-1f;
+	public void onRender(double width, double height, double deltaTime) {
+		angle += deltaTime * 30;
 		
 		double aspect = height/width;
 		

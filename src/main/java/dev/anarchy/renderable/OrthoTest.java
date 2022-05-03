@@ -9,7 +9,7 @@ public class OrthoTest implements Renderable {
 	private double animVar;
 
 	@Override
-	public void onRender(double width, double height) {
+	public void onRender(double width, double height, double deltaTime) {
 		animVar += 0.1;
 		y = Math.sin(animVar) * (height / 3);
 

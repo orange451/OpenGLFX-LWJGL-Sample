@@ -66,7 +66,7 @@ public class OpenGLFXExampleLWJGL extends Application {
 				fpsLabel.setText("fps: " + Math.floor(1d/event.getDeltaTime()));
 			});
 			
-			renderable.onRender(openGLPane.getWidth(), openGLPane.getHeight());
+			renderable.onRender(openGLPane.getWidth(), openGLPane.getHeight(), event.getDeltaTime());
 		});
 		
 		return openGLPane;
