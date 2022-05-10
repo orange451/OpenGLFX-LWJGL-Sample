@@ -63,7 +63,7 @@ public class OpenGLFXExampleLWJGL extends Application {
 		// Render example
 		openGLPane.setOnRender((event)-> {
 			Platform.runLater(()->{
-				fpsLabel.setText("fps: " + Math.floor(1d/event.getDelta()));
+				fpsLabel.setText("fps: " + event.getFps());
 			});
 			
 			renderable.onRender(openGLPane.getWidth(), openGLPane.getHeight(), event.getDelta());
