@@ -40,7 +40,7 @@ public class OpenGLFXExampleLWJGL extends Application {
 	}
 	
 	private Label createLabel() {
-		Label label = new Label("JavaFX rendering on top. OpenGLFX rendering below");
+		Label label = new Label("JavaFX rendering on top. LWJGL rendering below");
 		label.setBackground(new Background(new BackgroundFill(new Color(0, 0.5, 0.9, 0.5), null, null)));
 		return label;
 	}
