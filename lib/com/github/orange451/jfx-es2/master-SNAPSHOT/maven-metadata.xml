@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.github.orange451</groupId>
+  <artifactId>jfx-es2</artifactId>
+  <version>master-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20220510.050920</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20220510050920</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>master-20220510.050920-1</value>
+        <updated>20220510050920</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>master-20220510.050920-1</value>
+        <updated>20220510050920</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
