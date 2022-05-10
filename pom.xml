@@ -252,7 +252,7 @@
 		<dependency>
 			<groupId>com.github.orange451</groupId>
 			<artifactId>OpenGLFX-Ext</artifactId>
-			<version>master</version>
+			<version>master-SNAPSHOT</version>
 		</dependency>
 		
 		<!-- LWJGL -->
