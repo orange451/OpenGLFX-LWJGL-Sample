@@ -12,6 +12,7 @@
 		<maven.compiler.target>16</maven.compiler.target>
 		<lwjgl.version>3.3.1-SNAPSHOT</lwjgl.version>
 		<joml.version>1.9.25</joml.version>
+		<openglfx.version>2.8</openglfx.version>
 		<javafx.version>16</javafx.version>
 		<javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -213,14 +214,14 @@
 		<dependency>
 			<groupId>com.github.husker-dev.openglfx</groupId>
 			<artifactId>core</artifactId>
-			<version>master-SNAPSHOT</version>
+			<version>${openglfx.version}</version>
 		</dependency>
 		
 		<!-- OpenGLFX :: LWJGL integration -->
 		<dependency>
 			<groupId>com.github.husker-dev.openglfx</groupId>
 			<artifactId>lwjgl</artifactId>
-			<version>master-SNAPSHOT</version>
+			<version>${openglfx.version}</version>
 		</dependency>
 		
 		<!-- OpenGLFX :: Extended Features -->
