@@ -1,0 +1,182 @@
+/*
+ *
+ * Copyright (C) 2015-2020 Anarchy Engine Open Source Contributors (see CONTRIBUTORS.md)
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ */
+
+package engine.lua.type.object;
+
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import org.luaj.vm2.LuaValue;
+import engine.lua.LuaEngine;
+import engine.lua.type.LuaConnection;
+import engine.lua.type.LuaEvent;
+import engine.lua.type.ScriptRunner;
+import engine.lua.type.object.services.Core;
+import engine.lua.type.object.services.Game;
+
+public abstract class ScriptBase extends Instance {
+	private ScriptRunner scriptInstance;
+	private AtomicBoolean running;
+	public HashMap<LuaEvent,LuaConnection> connections;
+
+	private static final LuaValue C_SOURCE = LuaValue.valueOf("Source");
+	private static final LuaValue C_DISABLED = LuaValue.valueOf("Disabled");
+
+	public ScriptBase(String typename) {
+		super(typename);
+
+		this.defineField(C_SOURCE, LuaValue.valueOf(""), false);
+		this.defineField(C_DISABLED, LuaValue.valueOf(false), false);
+		
+		connections = new HashMap<LuaEvent,LuaConnection>();
+		running = new AtomicBoolean(false);
+		
+		this.ancestryChangedEvent().connect((args)->{
+			attemptExecute();
+		});
+	}
+
+	public void execute() {
+		if ( running.get() )
+			return;
+
+		running.set(true);
+		String source = this.get(C_SOURCE).toString();
+		scriptInstance = LuaEngine.runLua(source, this);
+	}
+
+	public void setSource(String source) {
+		this.set(C_SOURCE, LuaValue.valueOf(source));
+	}
+	
+	public String getSource() {
+		return this.get(C_SOURCE).toString();
+	}
+
+	@Override
+	protected LuaValue onValueSet(LuaValue key, LuaValue value) {
+		if ( key.eq_b(C_DISABLED) && value.checkboolean() ) {
+			stop();
+		}
+		
+		return value;
+	}
+
+	@Override
+	protected boolean onValueGet(LuaValue key) {
+		return true;
+	}
+
+	@Override
+	public void onDestroy() {
+		stop();
+	}
+	
+	public void stop() {
+		// Interrupt script-thread
+		if ( scriptInstance != null ) {
+			scriptInstance.interrupt();
+			scriptInstance = null;
+		}
+		
+		// Clear all connections
+		synchronized(connections) {
+			connections.forEach((key,value) -> {
+				key.disconnect(value);
+			});
+			connections.clear();
+		}
+
+		// Set us to not running state
+		running.set(false);
+	}
+	
+	protected void attemptExecute() {
+		if ( this.running.get() )
+			return;
+		
+		if ( this.get(C_DISABLED).checkboolean())
+			return;
+		
+		// Check if we're in a runnable service
+		ScriptExecutor runnableService = null;
+		int a = 0;
+		LuaValue parent = this.getParent();
+		while (!parent.isnil() && a < 32) {
+			if ( parent instanceof ScriptExecutor ) {
+				runnableService = (ScriptExecutor) parent;
+				break;
+			}
+			
+			parent = ((Instance)parent).getParent();
+			a++;
+		}
+		
+		// Get game (TODO make this not aids)
+		Game game = null;
+		parent = (LuaValue) runnableService;
+		while (!parent.isnil() && a < 32) {
+			if ( parent instanceof Game ) {
+				game = (Game) parent;
+				break;
+			}
+			
+			parent = ((Instance)parent).getParent();
+			a++;
+		}
+		
+		// Calculate whether or not we can run
+		boolean canRun = runnableService != null;
+		boolean inCore = canRun ? (runnableService instanceof Core) : false;
+		boolean isRunning = game.isStarted();
+		
+		// Stop script if game is not running and we're supposed to be running (but not overridden), or if we can't run.
+		if ( (!isRunning && canRun && !inCore) || !canRun ) {
+			stop();
+			return;
+		}
+		
+		// Script must be inside either game or project. (So scripts dont run in internally stored scenes)
+		//if ( !this.isDescendantOf(Game.game()) && !this.isDescendantOf(Game.project()) )
+		//	return;
+		
+		// Don't continue if we don't have a script object backing us.
+		if ( scriptInstance != null )
+			return;
+		
+		// Stop script if it says cannot run (normally used so local scripts dont run in server, and server scripts don't run in client).
+		if (!getCanRun())
+			canRun = false;
+		
+		// Run the script!
+		synchronized(running) {
+			if ( canRun ) {
+				execute();
+			}
+		}
+	}
+	
+	//@Override
+	//public void gameUpdateEvent(boolean important) {
+		/*if ( !important )
+			return;
+		
+		if ( !Game.isLoaded() )
+			return;
+		
+		attemptExecute();*/
+	//}
+
+	public abstract boolean getCanRun();
+
+	public boolean isRunning() {
+		return running.get();
+	}
+}
