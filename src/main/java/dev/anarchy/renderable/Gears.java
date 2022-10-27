@@ -34,6 +34,8 @@ public class Gears implements Renderable {
 		glEndList();
 
 		glEnable(GL_NORMALIZE);
+		
+		System.out.println(glGetString(GL_VERSION));
 	}
 
 	static void gear(float inner_radius, float outer_radius, float width, int teeth, float tooth_depth) {

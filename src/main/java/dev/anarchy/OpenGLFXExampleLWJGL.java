@@ -48,7 +48,7 @@ public class OpenGLFXExampleLWJGL extends Application {
 	private Pane createGLPane() {
 		// Create new OpenGLPane
 		OpenGLPane openGLPane = OpenGLPane.create(OpenGLPane.LWJGL_MODULE, DirectDrawPolicy.ALWAYS);
-		openGLPane.desiredFPSProperty().set(144);
+		openGLPane.desiredFpsProperty().set(144);
 		
 		// Add fps Label
 		fpsLabel = new Label("");
