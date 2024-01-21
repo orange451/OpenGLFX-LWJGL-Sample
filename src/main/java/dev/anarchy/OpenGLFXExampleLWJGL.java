@@ -1,7 +1,8 @@
 package dev.anarchy;
 
-import com.huskerdev.openglfx.DirectDrawPolicy;
+import com.huskerdev.openglfx.canvas.GLProfile;
 import com.huskerdev.openglfx.ext.OpenGLPane;
+import com.huskerdev.openglfx.lwjgl.LWJGLExecutor;
 
 import dev.anarchy.renderable.Gears;
 import dev.anarchy.renderable.Renderable;
@@ -47,7 +48,7 @@ public class OpenGLFXExampleLWJGL extends Application {
 
 	private Pane createGLPane() {
 		// Create new OpenGLPane
-		OpenGLPane openGLPane = OpenGLPane.create(OpenGLPane.LWJGL_MODULE, DirectDrawPolicy.ALWAYS);
+		OpenGLPane openGLPane = OpenGLPane.create(LWJGLExecutor.LWJGL_MODULE, GLProfile.Core);
 		openGLPane.desiredFpsProperty().set(144);
 		
 		// Add fps Label
@@ -63,10 +64,10 @@ public class OpenGLFXExampleLWJGL extends Application {
 		// Render example
 		openGLPane.setOnRender((event)-> {
 			Platform.runLater(()->{
-				fpsLabel.setText("fps: " + event.getFps());
+				fpsLabel.setText("fps: " + event.fps);
 			});
 			
-			renderable.onRender(openGLPane.getWidth(), openGLPane.getHeight(), event.getDelta());
+			renderable.onRender(openGLPane.getWidth(), openGLPane.getHeight(), event.delta);
 		});
 		
 		return openGLPane;

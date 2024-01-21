@@ -212,16 +212,14 @@
 	<dependencies>
 		<!-- OpenGLFX :: Library -->
 		<dependency>
-			<groupId>com.github.husker-dev.openglfx</groupId>
-			<artifactId>core</artifactId>
-			<version>${openglfx.version}</version>
+		    <groupId>com.huskerdev</groupId>
+		    <artifactId>openglfx</artifactId>
+		    <version>4.0.5</version>
 		</dependency>
-		
-		<!-- OpenGLFX :: LWJGL integration -->
 		<dependency>
-			<groupId>com.github.husker-dev.openglfx</groupId>
-			<artifactId>lwjgl</artifactId>
-			<version>${openglfx.version}</version>
+		    <groupId>com.huskerdev</groupId>
+		    <artifactId>openglfx-lwjgl</artifactId>
+		    <version>4.0.5</version>
 		</dependency>
 		
 		<!-- OpenGLFX :: Extended Features -->
@@ -236,13 +234,6 @@
 			<groupId>com.github.orange451</groupId>
 			<artifactId>${openjfx.es2}</artifactId>
 			<version>master-SNAPSHOT</version>
-		</dependency>
-
-		<!-- Kotlin :: OpenGLFX requires that we use Kotlin :( -->
-		<dependency>
-			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-stdlib-jdk7</artifactId>
-			<version>1.2.50</version>
 		</dependency>
 
 		<!-- OpenJFX :: Base -->
